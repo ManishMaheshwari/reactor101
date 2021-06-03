@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group 'com.manish'
+version '1.0-SNAPSHOT'
+
+repositories {
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation group: 'io.projectreactor.netty', name: 'reactor-netty', version: '1.0.7'
+    compile group: 'io.projectreactor', name: 'reactor-test', version: '3.4.6'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
