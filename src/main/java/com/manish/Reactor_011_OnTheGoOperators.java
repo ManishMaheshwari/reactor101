@@ -10,5 +10,10 @@ public class Reactor_011_OnTheGoOperators {
         Flux.range(1, 100)
                 .filter(i -> i % 25 == 0)
                 .subscribe(Helper.dataConsumer);
+
+        Helper.divider("Map - transform data on the way");
+        Flux.just("Manish", "Tarun", "Amit")
+                .map(data -> data.toUpperCase() + ": " + data.length())
+                .subscribe(Helper.dataConsumer);
     }
 }
