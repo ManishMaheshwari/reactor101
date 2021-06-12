@@ -13,9 +13,10 @@ public class Reactor_004_Subscribing {
         Helper.divider("Data & Error Consumer");
         Helper.getErroringFlux().subscribe(
                 System.out::println, //data consumer
-                System.err::println, //error consumer. In the absense of errorConsumer, an error in Publisher kills the thread.
+                System.err::println, //error consumer. In the absence of errorConsumer, an error in Publisher kills the thread.
                 () -> System.out.println("Done with this.")
         );
+        Helper.hold(2);
 
         Helper.divider("Subscription Consumer");
         Flux.range(1, 10)
