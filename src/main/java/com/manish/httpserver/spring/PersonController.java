@@ -27,6 +27,7 @@ public class PersonController {
     Defining Content Type allows the server and the client to understand the content boundaries,
     so that streaming of data can be done by the server (piecemeal sending), and
     consumption of data can be done by the client correctly.
+    Chunked Encoding?? Burp Suite?
      */
     @GetMapping(value = "/personstream/{count}", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<Person> findPersonsStream(@PathVariable int count) {
