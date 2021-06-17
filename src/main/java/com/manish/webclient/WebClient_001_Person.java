@@ -4,23 +4,34 @@ import com.manish.util.Person;
 import com.manish.util.Helper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.netty.http.client.HttpClient;
+import reactor.netty.transport.ProxyProvider;
 
 public class WebClient_001_Person {
 
+
+    /**
+     * To view tcpdump on OSX when running this:
+     * sudo tcpdump -vvXn -i lo0 port 8080 -X
+     */
+
     public static final Logger LOGGER = LoggerFactory.getLogger(WebClient_001_Person.class);
+
+    public static String HOST_URL = "http://localhost:8080";
 
     public static void main(String[] args) throws InterruptedException {
 
         WebClient wc = WebClient.builder()
-                .baseUrl("http://localhost:8080")
+                .baseUrl(HOST_URL)
                 .defaultHeader("Client", "WebClient")
                 .build();
 
-//        fluxOfPersons(wc);
+        fluxOfPersons(wc);
 //        fluxOfPersonsStream(wc);
 //        fluxOfPersonsWithDelay(wc);
-        monoPerson(wc);
+//        monoPerson(wc);
         return;
 
 
@@ -61,20 +72,23 @@ public class WebClient_001_Person {
     }
 
     public static void fluxOfPersonsWithDelay(WebClient wc) throws InterruptedException {
+        int count = 20;
+        int delay = 1000;
         Helper.divider("Expect Flux of Persons with Delay, content type stream");
         wc
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path("/person/15/1000")
+                        uriBuilder.path("/person/20000/1000")
                                 .queryParam("param1", "A")
                                 .queryParam("param2", "B")
                                 .build()
                 )
                 .retrieve()
                 .bodyToFlux(Person.class)
+
                 .subscribe(data -> LOGGER.info("Data recd: {}", data));
 
-        Helper.hold(20);
+        Helper.hold((count*delay/1000) + 10);
     }
 
     public static void monoPerson(WebClient wc) throws InterruptedException {
