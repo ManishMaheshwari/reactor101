@@ -28,13 +28,16 @@ public class Reactor_014_FlatMap {
         Helper.divider("FlatMap - with parallel schedulers");
         Flux.fromIterable(Arrays.asList(1, 2, 3, 4, 5))
                 .flatMap(a -> Mono.just(a).subscribeOn(Schedulers.parallel()))
+                //This execution happens on Schedulers.parallel()
                 .doOnNext(val -> LOGGER.info("[First Flat Map's out events] Recd {} on thread {}", val, Thread.currentThread().getName()))
                 .flatMap(
                         val -> {
+                            //This execution happens on Schedulers.parallel()
                             LOGGER.info("[Input to second Flat Map] Recd {} in flatMap for further flattening, on thread {}", val, Thread.currentThread().getName());
-                            val++;
+                            val=val*100;
                             return Mono.just(val).subscribeOn(Schedulers.boundedElastic());
                         })
+                //This execution happens on Schedulers.boundedElastic()
                 .subscribe(val -> LOGGER.info("[Final Subscriber] Recd {} at subscriber, on thread {}", val, Thread.currentThread().getName()));
 
         Helper.hold(10);

@@ -31,4 +31,14 @@ public class Helper {
         TimeUnit.SECONDS.sleep(seconds);
     }
 
+    public static String blockingClient(String url) {
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "Body of site - " + url;
+
+    }
+
 }
