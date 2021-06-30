@@ -12,7 +12,7 @@ public class Reactor_008_DebugLogging {
         Flux.range(1, 100)
                 .log("range")
                 .filter(i -> i % 10 == 0)
-                .log("filter")
+                .log("--filter")
                 .subscribe(Helper.dataConsumer);
 
 //        Helper.divider("Advanced Logging");
