@@ -6,6 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
+/**
+This example has webclient connecting to https://httpbin.org"
+ */
 public class Web_001 {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(Web_001.class);

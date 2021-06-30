@@ -13,6 +13,7 @@ public class WebClient_001_Person {
 
 
     /**
+     * Run com.manish.httpserver.spring.Application server prior to testing webclient
      * To view tcpdump on OSX when running this:
      * sudo tcpdump -vvXn -i lo0 port 8080 -X
      */

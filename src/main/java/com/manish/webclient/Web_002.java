@@ -7,6 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.util.StopWatch;
 import org.springframework.web.reactive.function.client.WebClient;
 
+/**
+ * Run com.manish.httpserver.spring.Application server prior to testing webclient
+ */
 public class Web_002 {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(Web_002.class);

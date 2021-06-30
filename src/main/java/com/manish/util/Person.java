@@ -19,7 +19,7 @@ public class Person {
 
     public static Stream<Person> getPersons(int count) {
         String[] names = {"Manish", "Amit", "Tarun", "Chander", "Hemant"};
-        String[] lastNames = {"Maheshwari", "Shah", "Sharma", "Ahuja", "Lohia"};
+        String[] lastNames = {"Maheshwari", "Shah", "Sharma", "Ahuja", "Loha"};
         List<Person> persons = new LinkedList<>();
         for (int i = 0; i < count; i++) {
             Person p = new Person(i + 1, names[i % names.length], lastNames[i % names.length], (i + 1) * 10);
