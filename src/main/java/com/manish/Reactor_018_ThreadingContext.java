@@ -77,7 +77,7 @@ public class Reactor_018_ThreadingContext {
 
         Helper.hold(5);
 
-        Helper.divider("Using publishOn as well as subscribeOn");
+        Helper.divider("Using publishOn as well as subscribeOn - publishOn trumps");
         Flux.range(1, 5)
                 .publishOn(Schedulers.newBoundedElastic(5, 5, "pubThread"))
                 .map(i -> "pubsub" + i + ".com")
