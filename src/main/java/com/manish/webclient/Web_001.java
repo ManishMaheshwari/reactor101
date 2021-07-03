@@ -7,7 +7,7 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
-This example has webclient connecting to https://httpbin.org"
+This example has webclient connecting to https://httpbin.org
  */
 public class Web_001 {
 
@@ -20,6 +20,14 @@ public class Web_001 {
                 .defaultHeader("Client", "WebClient")
                 .build();
 
+//        basicGet(wc);
+//        jsonGet(wc);
+        basicPost(wc);
+
+        Helper.hold(5);
+    }
+
+    private static void basicGet(WebClient wc) {
         wc
                 .get()
                 .uri(uriBuilder ->
@@ -31,8 +39,9 @@ public class Web_001 {
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribe(data -> LOGGER.info(data));
+    }
 
-
+    private static void jsonGet(WebClient wc) {
         Helper.divider("Gets JSON Data");
         wc
                 .get()
@@ -43,8 +52,9 @@ public class Web_001 {
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribe(data -> LOGGER.info(data));
+    }
 
-
+    public static void basicPost(WebClient wc) {
         Helper.divider("Post request");
         wc
                 .post()
@@ -58,22 +68,5 @@ public class Web_001 {
                 .bodyToMono(String.class)
 
                 .subscribe(data -> LOGGER.info(data));
-
-
-        Helper.divider("Post request");
-        wc
-                .post()
-                .uri(uriBuilder ->
-                        uriBuilder.path("/post")
-                                .build()
-                )
-                .bodyValue("HELLO data")
-                .retrieve()
-//                .onStatus(httpStatus -> httpStatus.is2xxSuccessful(), ClientResponse::createException)
-                .bodyToMono(String.class)
-
-                .subscribe(data -> LOGGER.info(data));
-
-        Helper.hold(5);
     }
 }
