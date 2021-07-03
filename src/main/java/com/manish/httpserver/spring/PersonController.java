@@ -11,11 +11,15 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.stream.Stream;
 
 @RestController
 public class PersonController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonController.class);
 
+    /*
+    Transfer Encoding is chunked - since the size of response is not known prior to streaming.
+     */
     @GetMapping("/person/{count}")
     public Flux<Person> findPersonsJson(@PathVariable int count) {
         LOGGER.info("Handling flux - findPersons with count {}", count);
@@ -24,10 +28,10 @@ public class PersonController {
     }
 
     /*
-    Defining Content Type allows the server and the client to understand the content boundaries,
+    Content Type helps the server and the client to understand the content boundaries,
     so that streaming of data can be done by the server (piecemeal sending), and
     consumption of data can be done by the client correctly.
-    Chunked Encoding is chunked - since the size of response is not known prior to streaming.
+    Transfer Encoding is chunked - since the size of response is not known prior to streaming.
      */
     @GetMapping(value = "/personstream/{count}", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<Person> findPersonsStream(@PathVariable int count) {

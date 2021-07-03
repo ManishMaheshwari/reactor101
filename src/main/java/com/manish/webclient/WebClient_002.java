@@ -10,9 +10,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 /**
  * Run com.manish.httpserver.spring.Application server prior to testing webclient
  */
-public class Web_002 {
+public class WebClient_002 {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(Web_002.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(WebClient_002.class);
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -23,6 +23,12 @@ public class Web_002 {
                 .defaultHeader("Client", "WebClient")
                 .build();
 
+//        expectMonoWithDelay(sw, wc);
+
+        expectFluxWithDelay(sw, wc);
+    }
+
+    public static void expectMonoWithDelay(StopWatch sw, WebClient wc) throws InterruptedException {
         Helper.divider("Expect Mono with delay");
         wc
                 .get()
@@ -39,7 +45,9 @@ public class Web_002 {
                 .subscribe(data -> LOGGER.info("Data recd: {}, \nMeasured delay: {} ms", data, sw.getTotalTimeMillis()));
 
         Helper.hold(7);
+    }
 
+    public static void expectFluxWithDelay(StopWatch sw, WebClient wc) throws InterruptedException {
         Helper.divider("Expect Flux with delay");
         wc
                 .get()
@@ -49,12 +57,15 @@ public class Web_002 {
                                 .queryParam("param2", "B")
                                 .build()
                 )
-//                .contentType(MediaType.TEXT_EVENT_STREAM)
+                .accept(MediaType.TEXT_EVENT_STREAM) //Advertises that I can accept a stream. Therefore, server sends a Transfer-Encoding: Chunked stream.
                 .retrieve()
-                .bodyToMono(String.class)
+                .bodyToFlux(String.class)
                 .doOnSubscribe(subscription -> sw.start())
-                .doOnNext(data -> sw.stop())
-                .subscribe(data -> LOGGER.info("Data recd: {}, \nMeasured delay: {} ms", data, sw.getTotalTimeMillis()))
+                .doOnNext(data -> {
+                    sw.stop();
+                    sw.start();
+                })
+                .subscribe(data -> LOGGER.info("Data recd: {}, \nMeasured delay: {} ms", data, sw.getLastTaskTimeMillis()))
         ;
         Helper.hold(10);
     }

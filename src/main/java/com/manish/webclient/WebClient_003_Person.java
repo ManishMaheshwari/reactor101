@@ -4,12 +4,9 @@ import com.manish.util.Person;
 import com.manish.util.Helper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.netty.http.client.HttpClient;
-import reactor.netty.transport.ProxyProvider;
 
-public class WebClient_001_Person {
+public class WebClient_003_Person {
 
 
     /**
@@ -18,7 +15,7 @@ public class WebClient_001_Person {
      * sudo tcpdump -vvXn -i lo0 port 8080 -X
      */
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(WebClient_001_Person.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(WebClient_003_Person.class);
 
     public static String HOST_URL = "http://localhost:8080";
 
@@ -29,10 +26,10 @@ public class WebClient_001_Person {
                 .defaultHeader("Client", "WebClient")
                 .build();
 
-        fluxOfPersons(wc);
+//        fluxOfPersons(wc);
 //        fluxOfPersonsStream(wc);
 //        fluxOfPersonsWithDelay(wc);
-//        monoPerson(wc);
+        monoPerson(wc);
         return;
 
 
@@ -79,7 +76,8 @@ public class WebClient_001_Person {
         wc
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path("/person/20000/1000")
+                        uriBuilder
+                                .pathSegment("person", count+"", delay+"")
                                 .queryParam("param1", "A")
                                 .queryParam("param2", "B")
                                 .build()

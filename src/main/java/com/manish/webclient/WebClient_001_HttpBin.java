@@ -3,15 +3,14 @@ package com.manish.webclient;
 import com.manish.util.Helper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
 This example has webclient connecting to https://httpbin.org
  */
-public class Web_001 {
+public class WebClient_001_HttpBin {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(Web_001.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(WebClient_001_HttpBin.class);
 
     public static void main(String[] args) throws InterruptedException {
 

@@ -28,7 +28,7 @@ public class GeneralController {
 
     @GetMapping("/mono/{data}/{delay}")
     public Mono<String> monoDelayed(@PathVariable String data, @PathVariable int delay) {
-        LOGGER.info("Handling monoDelayed - Data - {}, Delay - {}ms", data, delay);
+        LOGGER.info("Handling monoDelayed - Data - {}, Delay - {} ms", data, delay);
         return Mono.just(String.format("%s delayed by %d ms.", data.toUpperCase(), delay))
                 .delayElement(Duration.ofMillis(delay));
     }
