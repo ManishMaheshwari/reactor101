@@ -19,7 +19,7 @@ public class WebClient_005_BackpressureViaTcpFlowControl {
      * We request insane number of Flux data from remote.
      * However, we exert backpressure from time to time, when we are reading 20th and every 4000th data.
      *
-     * Backpressure is applied using TCP Flow Control mechanisms.
+     * Backpressure in IPC is applied using TCP Flow Control mechanisms.
      * The emptying of input byte buffer is slowed down, resulting on non-Acking at TCP layer to the remote.
      * Remote thus slows down.
      *
